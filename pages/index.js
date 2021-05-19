@@ -4,8 +4,23 @@ import axios from "axios";
 
 export default function Home() {
 
-  axios.get("https://cors-api-nu.vercel.app/api").then(res => console.log("server response", res));
 
+  const link = new HttpLink({
+    uri: "https://cors-server-psi.vercel.app/graphql"
+  });
+
+  const client = new ApolloClient({
+    link,
+    cache: new InMemoryCache()
+  })
+
+  client.query({
+    query: gql`
+      query hello {
+        hello
+      }
+    `
+  })
 
   return (
     <div className="container">
